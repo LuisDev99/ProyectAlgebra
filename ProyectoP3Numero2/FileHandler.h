@@ -6,9 +6,6 @@ typedef struct Node {
 	int valor;
 	Node *derecha;
 	Node *abajo;
-
-	
-
 } *node;
 
 
@@ -24,9 +21,11 @@ public:
 	~FileHandler();
 
 
-	static void insertarValor(Node *& primerNodo, int val);
+	static void crearFilaDeNodos(Node *& primerNodo, int val);
+	static void crearNodo(Node *&nodo, int val);
 	static node loadMatrixFromFile();
 	static void saveMatrix(Node *& matrix);
+	static void crearMatriz(Node *& matriz, int val, bool isFirstLine);
 
 
 };
