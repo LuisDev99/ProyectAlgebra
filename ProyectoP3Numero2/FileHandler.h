@@ -25,7 +25,7 @@ public:
 	static void crearNodo(Node *&nodo, int val);
 	static node loadMatrixFromFile();
 	static void saveMatrix(Node *& matrix);
-	static void crearMatriz(Node *& matriz, int val, bool isFirstLine);
+	static void crearMatriz(Node *& matriz, int val, int rowCounter);
 
 
 };

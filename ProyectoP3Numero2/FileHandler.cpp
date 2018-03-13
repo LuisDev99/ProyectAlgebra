@@ -44,24 +44,42 @@ void FileHandler::crearNodo(Node *& nodo, int val)
 }
 
 
-void FileHandler::crearMatriz(Node *& matriz, int val, bool isFirstLine) {
+void FileHandler::crearMatriz(Node *& matriz, int val, int rowCount) {
 
-	if (isFirstLine == true) {
+	if (rowCount == 0) {
 		crearFilaDeNodos(matriz, val);
 	} else {
 		node tmp = matriz, nodeBefore = 0;
+		int row = 1;
 
-		if (tmp->abajo == 0)
-			crearNodo(tmp->abajo, val);
-		else {
-			while (tmp->abajo != 0) {
-				nodeBefore = tmp;
-				tmp = tmp->derecha;
-			}
-			crearNodo(tmp->abajo, val);
-			nodeBefore->abajo->derecha = tmp->abajo;
+		while (row < rowCount) {
+			tmp = tmp->abajo;
+			row++;
 		}
+		nodeBefore = tmp;
+		while (tmp->abajo != 0) {
+			nodeBefore = tmp;
+			tmp = tmp->derecha;
+		}
+		crearNodo(tmp->abajo, val);
+		nodeBefore->abajo->derecha = tmp->abajo;
+
+
+		/*if (doneFinishingLine == true) {
+			while (tmp->abajo != 0)
+				tmp = tmp->abajo;
+			crearNodo(tmp->abajo, val);
+			return;
+		}
+			
+		while (tmp->abajo != 0) {
+			nodeBefore = tmp;
+			tmp = tmp->derecha;
+		}
+		crearNodo(tmp->abajo, val);
+		nodeBefore->abajo->derecha = tmp->abajo;*/
 	}
+	
 
 }
 
@@ -83,16 +101,19 @@ node FileHandler::loadMatrixFromFile()
 
 	node newMatrix = 0, headOfRow = 0, head = 0, nodeBefore = 0;
 	string line;
-	int value;
-	bool onFirstRow = true;
+	int value, rowCounter = 0;
+	bool onFirstRow = true, doneFinishingLine = true;
 
 	while (getline(matrix, line)) { //Por cada linea
 		stringstream linestream(line);
 		
 		while (linestream >> value) { //Por cada valor en la linea
-			crearMatriz(newMatrix, value, onFirstRow);
+			crearMatriz(newMatrix, value, rowCounter);
+			doneFinishingLine = false;
 		}
 		onFirstRow = false;
+		doneFinishingLine = true;
+		rowCounter++;
 	}
 	matrix.close();
  	return newMatrix;
@@ -143,3 +164,21 @@ void FileHandler::saveMatrix(Node *&matrix) {
 //} else {
 //	head = headOfRow->abajo;
 //}
+
+
+
+///OLD WORIKING
+
+//if (doneFinishingLine == true) {
+//	while (tmp->abajo != 0)
+//		tmp = tmp->abajo;
+//	crearNodo(tmp->abajo, val);
+//	return;
+//}
+//
+//while (tmp->abajo != 0) {
+//	nodeBefore = tmp;
+//	tmp = tmp->derecha;
+//}
+//crearNodo(tmp->abajo, val);
+//nodeBefore->abajo->derecha = tmp->abajo;

@@ -17,7 +17,7 @@ int main() {
 
 		case 1:
 			//sumar
-			system("cls");
+			//system("cls");
 			AlgebraHandler::addMatrix();
 			break;
 		case 2:

@@ -1,7 +1,7 @@
 #include "AlgebraHandler.h"
 #include <iostream>
-#include <Windows.h>
-#include <stdlib.h>
+
+
 using namespace std;
 
 AlgebraHandler::AlgebraHandler()
@@ -55,7 +55,7 @@ void AlgebraHandler::addMatrix() {
 
 	//Efectos visuales
 	cout << "Haciendo calculos";
-	Sleep(500);
+	/*Sleep(500);
 	cout << ".";
 	Sleep(500);
 	cout << ".";
@@ -68,7 +68,7 @@ void AlgebraHandler::addMatrix() {
 	Sleep(500);
 	cout << "." << endl;
 	Sleep(100);
-	system("cls");
+	system("cls");*/
 	cout << "Hecho! Revisar el archivo con el resultado" << endl;
 
 	FileHandler::saveMatrix(newMatrix);
