@@ -23,11 +23,11 @@ public:
 	~FileHandler();
 
 
-	static void crearFilaDeNodos(Node *& primerNodo, int val);
-	static void crearNodo(Node *&nodo, int val);
+	static void createLineOfNodes(Node *& primerNodo, int val);
+	static void createNode(Node *&nodo, int val);
 	static node loadMatrixFromFile();
 	static void saveMatrix(Node *& matrix);
-	static void crearMatriz(Node *& matriz, int val, int rowCounter);
+	static void createMatrix(Node *& matriz, int val, int rowCounter);
 	static bool checkMatrixDimentions(std::string file);
 
 

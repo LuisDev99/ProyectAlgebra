@@ -15,7 +15,7 @@ FileHandler::~FileHandler()
 {
 }
 
-void FileHandler::crearFilaDeNodos(Node *& primerNodo, int val) 
+void FileHandler::createLineOfNodes(Node *& primerNodo, int val) 
 {
 	node newVector = new Node();
 	newVector->valor = val;
@@ -36,7 +36,7 @@ void FileHandler::crearFilaDeNodos(Node *& primerNodo, int val)
 	}
 }
 
-void FileHandler::crearNodo(Node *& nodo, int val)
+void FileHandler::createNode(Node *& nodo, int val)
 {
 	node newNode = new Node();
 	newNode->valor = val;
@@ -45,10 +45,10 @@ void FileHandler::crearNodo(Node *& nodo, int val)
 }
 
 
-void FileHandler::crearMatriz(Node *& matriz, int val, int rowCount) {
+void FileHandler::createMatrix(Node *& matriz, int val, int rowCount) {
 
 	if (rowCount == 0) {
-		crearFilaDeNodos(matriz, val);
+		createLineOfNodes(matriz, val);
 	} else {
 		node tmp = matriz, nodeBefore = 0;
 		int row = 1;
@@ -62,23 +62,8 @@ void FileHandler::crearMatriz(Node *& matriz, int val, int rowCount) {
 			nodeBefore = tmp;
 			tmp = tmp->derecha;
 		}
-		crearNodo(tmp->abajo, val);
+		createNode(tmp->abajo, val);
 		nodeBefore->abajo->derecha = tmp->abajo;
-
-
-		/*if (doneFinishingLine == true) {
-			while (tmp->abajo != 0)
-				tmp = tmp->abajo;
-			crearNodo(tmp->abajo, val);
-			return;
-		}
-			
-		while (tmp->abajo != 0) {
-			nodeBefore = tmp;
-			tmp = tmp->derecha;
-		}
-		crearNodo(tmp->abajo, val);
-		nodeBefore->abajo->derecha = tmp->abajo;*/
 	}
 	
 
@@ -130,28 +115,25 @@ node FileHandler::loadMatrixFromFile()
 		return 0;
 	}
 
-	if (checkMatrixDimentions(fileName) == false) {
+	if (checkMatrixDimentions(fileName) == false) { //verificar que las columnas de cada fila de la matriz tengan el mismo tamaño
 		cout << "Error: La Matriz es irregular(una columna de una fila no es igual que las demas)" << endl;
 		return 0;
 	}
 
-	node newMatrix = 0, headOfRow = 0, head = 0, nodeBefore = 0;
+	node newMatrix = 0;
 	string line;
-	int value, rowCounter = 0;
-	int filas = 0, columnas = 0;
-	bool onFirstRow = true, doneFinishingLine = true;
+	int value = 0, rowCounter = 0;
 
 	while (getline(matrixFromFile, line)) { //Por cada linea
 		stringstream linestream(line);
 		
 		while (linestream >> value) { //Por cada valor en la linea
-			crearMatriz(newMatrix, value, rowCounter);
-			doneFinishingLine = false;
+			createMatrix(newMatrix, value, rowCounter);
 		}
-		onFirstRow = false;
-		doneFinishingLine = true;
 		rowCounter++;
 	}
+
+
 	matrixFromFile.close();
 	cout << "== Matriz cargada sin ningun error! ==\n";
 	return newMatrix;

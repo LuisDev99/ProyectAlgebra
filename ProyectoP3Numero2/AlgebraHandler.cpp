@@ -35,11 +35,11 @@ void AlgebraHandler::addMatrix() {
 		while (headA != 0 && headB != 0) {
 
 			if (onFirstRow == true) {
-				FileHandler::crearFilaDeNodos(newMatrix, (headA->valor + headB->valor));
+				FileHandler::createLineOfNodes(newMatrix, (headA->valor + headB->valor));
 				headA = headA->derecha;
 				headB = headB->derecha;
 			} else {
-				FileHandler::crearNodo(newMatrix->abajo, (headA->valor + headB->valor));
+				FileHandler::createNode(newMatrix->abajo, (headA->valor + headB->valor));
 				headA = headA->derecha;
 				headB = headB->derecha;
 				newMatrix = newMatrix->derecha;
