@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
-
+#include <fstream>
+#include <iostream>
+#include <sstream>
 typedef struct Node {
 
 	int valor;
@@ -26,6 +28,7 @@ public:
 	static node loadMatrixFromFile();
 	static void saveMatrix(Node *& matrix);
 	static void crearMatriz(Node *& matriz, int val, int rowCounter);
+	static bool checkMatrixDimentions(std::string file);
 
 
 };

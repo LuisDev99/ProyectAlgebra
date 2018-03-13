@@ -18,7 +18,8 @@ void AlgebraHandler::addMatrix() {
 	node matrixA = FileHandler::loadMatrixFromFile();
 	node matrixB = FileHandler::loadMatrixFromFile();
 
-	while(matrixA == 0) //Repetir hasta que ingrese un archivo valido
+
+	while (matrixA == 0) //Repetir hasta que ingrese un archivo valido
 		matrixA = FileHandler::loadMatrixFromFile();
 
 	while (matrixB == 0) //Repetir hasta que ingrese un archivo valido
