@@ -1,6 +1,7 @@
 #pragma once
 #include "FileHandler.h"
 
+
 class AlgebraHandler
 {
 public:
@@ -11,6 +12,7 @@ public:
 	static void substractMatrix();
 	static void multiplyMatrix();
 	static void determinantOfMatrix();
-
+	static int getMatrixColumnsCount(Node*& matrix);;
+	
 };
 

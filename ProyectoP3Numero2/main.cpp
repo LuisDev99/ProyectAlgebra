@@ -22,7 +22,8 @@ int main() {
 			break;
 		case 2:
 			//Restar
-
+			//system("cls");
+			AlgebraHandler::substractMatrix();
 			break;
 		case 3:
 			//Multiplicar

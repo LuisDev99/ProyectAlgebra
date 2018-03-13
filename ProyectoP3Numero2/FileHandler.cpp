@@ -99,6 +99,24 @@ bool FileHandler::checkMatrixDimentions(string file)
 
 }
 
+void FileHandler::printMatrix(Node *& matrix)
+{
+
+	node tmp = matrix;
+	node head = tmp;
+	while (tmp != 0) {
+
+		while (tmp != 0) {
+			cout << tmp->valor << ' ';
+			tmp = tmp->derecha;
+		}
+		cout << endl;
+		tmp = head->abajo;
+		head = tmp;
+	}
+
+}
+
 
 
 node FileHandler::loadMatrixFromFile()
@@ -142,8 +160,11 @@ node FileHandler::loadMatrixFromFile()
 
 
 void FileHandler::saveMatrix(Node *&matrix) {
+	string fileName;
+	cout << "Ingrese el nombre con el que desea guardar el archivo con la matriz resultante: ";
+	cin >> fileName;
 
-	ofstream writer("Resultado.txt", ios::app);
+	ofstream writer(fileName, ios::app);
 
 	node tmp = matrix;
 	node head = tmp;
@@ -157,48 +178,6 @@ void FileHandler::saveMatrix(Node *&matrix) {
 		tmp = head->abajo;
 		head = tmp;
 	}
-
+	cout << "\nHecho! Revisar el archivo con el resultado" << endl;
 	writer.close();
 }
-
-
-
-//OLD
-//if (onFirstRow) {
-//	crearFilaDeNodos(newMatrix, value);
-//
-//} else {
-//	crearNodo(head->abajo, value);
-//	if (head->derecha != 0)
-//		head = head->derecha;
-//}
-//
-////USAR VARIBALES TEMP
-//
-//}
-//onFirstRow = false;
-//
-//if (headOfRow == 0) {
-//	head = headOfRow = newMatrix;
-//
-//} else {
-//	head = headOfRow->abajo;
-//}
-
-
-
-///OLD WORIKING
-
-//if (doneFinishingLine == true) {
-//	while (tmp->abajo != 0)
-//		tmp = tmp->abajo;
-//	crearNodo(tmp->abajo, val);
-//	return;
-//}
-//
-//while (tmp->abajo != 0) {
-//	nodeBefore = tmp;
-//	tmp = tmp->derecha;
-//}
-//crearNodo(tmp->abajo, val);
-//nodeBefore->abajo->derecha = tmp->abajo;
