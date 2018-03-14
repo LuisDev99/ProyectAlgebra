@@ -25,6 +25,7 @@ public:
 	static void createMatrix(Node *& matriz, int val, int rowCounter);
 	static bool checkMatrixDimentions(std::string file);
 	static void printMatrix(Node *&matrix);
+	static void saveDeterminant(int valor);
 
 };
 

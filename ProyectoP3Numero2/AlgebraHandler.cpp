@@ -1,5 +1,6 @@
 #include "AlgebraHandler.h"
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -163,7 +164,31 @@ void AlgebraHandler::multiplyMatrix() {
 
 void AlgebraHandler::determinantOfMatrix() {
 
+	node matrix = FileHandler::loadMatrixFromFile();
 
+	if (matrix == 0)
+		return;
+
+	int columns = AlgebraHandler::getMatrixColumnsCount(matrix);
+	int rows = AlgebraHandler::getMatrixRowsCount(matrix);
+
+	if (rows != columns) {
+		cout << "\nLa matriz es irregular, las filas y columnas tienen que ser iguales (1 x 1, 2 x 2, 3 x 3)\n";
+		return;
+	}
+
+	if (rows >= 4 || columns >= 4) {
+		cout << "\nLa matriz tiene que ser : 1 x 1, 2 x 2, 3 x 3, no mayor a eso(en este proyecto)\n";
+		return;
+	}
+
+	node tmp = matrix;
+
+
+	int determinant = ((rows != 1) ? ((rows == 2) ? getDeterminant2x2(matrix) : getDeterminant3x3(matrix)) : 1);
+	
+	cout << "La determinante es: " << determinant << endl;
+	FileHandler::saveDeterminant(determinant);
 
 }
 
@@ -209,4 +234,40 @@ bool AlgebraHandler::checkMatricesDimentions(Node *& A, Node *& B)
 		return false;
 	}
 	return true;
+}
+
+int AlgebraHandler::getDeterminant2x2(Node *& matrix)
+{
+	node tmp = matrix;
+	node helper = tmp;
+	int x1, x2, y1, y2;
+
+	x1 = tmp->valor;
+	x2 = tmp->abajo->derecha->valor;
+	y1 = tmp->derecha->valor;
+	y2 = tmp->abajo->valor;
+	
+	return (x1 * x2) - (y1 * y2);
+
+}
+
+int AlgebraHandler::getDeterminant3x3(Node *& matrix)
+{
+	node tmp = matrix;
+	node helper = tmp;
+
+	int a11, a12, a13, a21, a22, a23, a31, a32, a33;
+
+	a11 = tmp->valor;
+	a12 = tmp->derecha->valor;
+	a13 = tmp->derecha->derecha->valor;
+	a21 = tmp->abajo->valor;
+	a22 = tmp->abajo->derecha->valor;
+	a23 = tmp->abajo->derecha->derecha->valor;
+	a31 = tmp->abajo->abajo->valor;
+	a32 = tmp->abajo->abajo->derecha->valor;
+	a33 = tmp->abajo->abajo->derecha->derecha->valor;
+
+	return ((a11 * a22 * a33) + (a12 * a23 * a31) + (a21*a32*a13)) - ((a13 * a22 * a31) + (a12 * a21 * a33) + (a23 * a32 * a11));
+
 }

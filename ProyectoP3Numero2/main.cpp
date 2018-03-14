@@ -31,7 +31,8 @@ int main() {
 			break;
 		case 4:
 			//Determinante
-
+			//system("cls");
+			AlgebraHandler::determinantOfMatrix();
 			break;
 
 

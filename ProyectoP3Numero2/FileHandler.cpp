@@ -10,7 +10,6 @@ FileHandler::FileHandler()
 {
 }
 
-
 FileHandler::~FileHandler()
 {
 }
@@ -43,7 +42,6 @@ void FileHandler::createNode(Node *& nodo, int val)
 	newNode->abajo = 0;
 	nodo = newNode;
 }
-
 
 void FileHandler::createMatrix(Node *& matriz, int val, int rowCount) {
 
@@ -117,7 +115,19 @@ void FileHandler::printMatrix(Node *& matrix)
 
 }
 
+void FileHandler::saveDeterminant(int valor)
+{
+	string filename;
 
+	cout << "Ingrese el nombre del archivo en el que desea guardar el resultado: ";
+	cin >> filename;
+
+	ofstream writer(filename);
+
+	writer << "La determinante de la matriz es: " << valor << '\n';
+	writer.close();
+
+}
 
 node FileHandler::loadMatrixFromFile()
 {
@@ -134,7 +144,7 @@ node FileHandler::loadMatrixFromFile()
 	}
 
 	if (checkMatrixDimentions(fileName) == false) { //verificar que las columnas de cada fila de la matriz tengan el mismo tamaño
-		cout << "Error: La Matriz es irregular, una columna de una fila no es igual que las demas (Asegurese que las columnas de cada fila tengan el mismo size)" << endl;
+		cout << "Error: La Matriz es irregular, una columna de una fila no es igual que las demas(Asegurese que las columnas de cada fila tengan el mismo tamaño)" << endl;
 		return 0;
 	}
 
@@ -151,13 +161,11 @@ node FileHandler::loadMatrixFromFile()
 		rowCounter++;
 	}
 
-
 	matrixFromFile.close();
 	cout << "== Matriz cargada sin ningun error! ==\n";
 	return newMatrix;
 
 }
-
 
 void FileHandler::saveMatrix(Node *&matrix) {
 	string fileName;
