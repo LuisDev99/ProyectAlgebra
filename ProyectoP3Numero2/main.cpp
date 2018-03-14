@@ -9,7 +9,7 @@ int main() {
 	int menu = 0;
 
 	do {
-		cout << "1. Sumar matrices\n2. Restar matrices\n3. Multiplicar Matrices\n4.Sacar Determinante\nUn numero mayor a 4 para salir\nIngrese lo que quiere hacer: ";
+		cout << "1. Sumar matrices\n2. Restar matrices\n3. Multiplicar Matrices\n4. Sacar Determinante\nUn numero mayor a 4 para salir\nIngrese lo que quiere hacer: ";
 		cin >> menu;
 
 

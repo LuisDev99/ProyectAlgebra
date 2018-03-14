@@ -14,14 +14,9 @@ typedef struct Node {
 
 class FileHandler
 {
-	
-	
-
-
 public:
 	FileHandler();
 	~FileHandler();
-
 
 	static void createLineOfNodes(Node *& primerNodo, int val);
 	static void createNode(Node *&nodo, int val);

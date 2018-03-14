@@ -134,7 +134,7 @@ node FileHandler::loadMatrixFromFile()
 	}
 
 	if (checkMatrixDimentions(fileName) == false) { //verificar que las columnas de cada fila de la matriz tengan el mismo tamaño
-		cout << "Error: La Matriz es irregular(una columna de una fila no es igual que las demas)" << endl;
+		cout << "Error: La Matriz es irregular, una columna de una fila no es igual que las demas (Asegurese que las columnas de cada fila tengan el mismo size)" << endl;
 		return 0;
 	}
 
