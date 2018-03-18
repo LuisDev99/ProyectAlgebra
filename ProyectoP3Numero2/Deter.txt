@@ -1,1 +1,0 @@
-La determinante de la matriz que esta en el archivo Deter.txt es: 1

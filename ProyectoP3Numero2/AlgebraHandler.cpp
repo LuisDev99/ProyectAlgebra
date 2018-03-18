@@ -1,8 +1,11 @@
 #include "AlgebraHandler.h"
 #include <iostream>
 #include <vector>
+#include <Windows.h>
 
 using namespace std;
+
+#define VERDADERO true
 
 AlgebraHandler::AlgebraHandler()
 {
@@ -58,30 +61,13 @@ void AlgebraHandler::addMatrix() {
 		tmpC = tmpC->abajo;
 	}
 
-
 	//Efectos visuales
-	//cout << "Haciendo calculos";
-	/*Sleep(500);
-	cout << ".";
-	Sleep(500);
-	cout << ".";
-	Sleep(500);
-	cout << ".";
-	Sleep(500);
-	cout << ".";
-	Sleep(500);
-	cout << ".";
-	Sleep(500);
-	cout << "." << endl;
-	Sleep(100);
-	system("cls");*/
+	AlgebraHandler::specialEffects();
 
 	FileHandler::saveMatrix(newMatrix);
 	cout << "\n\tImprimiendo la Matriz Resultante\n" << endl;
 	FileHandler::printMatrix(newMatrix);
 	cout << endl;
-
-
 }
 
 void AlgebraHandler::substractMatrix() {
@@ -105,8 +91,7 @@ void AlgebraHandler::substractMatrix() {
 	cout << "\n\tImprimiendo Segunda Matriz\n" << endl;
 	FileHandler::printMatrix(matrixB);
 
-
-	if (checkMatricesDimentions(matrixA, matrixB) == false) {
+	if (checkMatricesDimentions(matrixA, matrixB) == false) { //verificar que as matrices tengan el mismo tamaño n x n
 		return;
 	}
 
@@ -132,23 +117,9 @@ void AlgebraHandler::substractMatrix() {
 		tmpC = tmpC->abajo;
 	}
 
-
 	//Efectos visuales
-	//cout << "Haciendo calculos";
-	/*Sleep(500);
-	cout << ".";
-	Sleep(500);
-	cout << ".";
-	Sleep(500);
-	cout << ".";
-	Sleep(500);
-	cout << ".";
-	Sleep(500);
-	cout << ".";
-	Sleep(500);
-	cout << "." << endl;
-	Sleep(100);
-	system("cls");*/
+	AlgebraHandler::specialEffects();
+
 	FileHandler::saveMatrix(newMatrix);
 	cout << "\n\tImprimiendo la Matriz Resultante\n" << endl;
 	FileHandler::printMatrix(newMatrix);
@@ -157,8 +128,75 @@ void AlgebraHandler::substractMatrix() {
 }
 
 void AlgebraHandler::multiplyMatrix() {
-
 	
+	node matrixA = FileHandler::loadMatrixFromFile();
+
+	while (matrixA == 0) {//Repetir hasta que ingrese un archivo valido
+		matrixA = FileHandler::loadMatrixFromFile();
+	}
+	cout << "\n\tImprimiendo Primera Matriz\n" << endl;
+	FileHandler::printMatrix(matrixA);
+
+	node matrixB = FileHandler::loadMatrixFromFile();
+
+	while (matrixB == 0) {//Repetir hasta que ingrese un archivo valido
+		matrixB = FileHandler::loadMatrixFromFile();
+	}
+	cout << "\n\tImprimiendo Segunda  Matriz\n" << endl;
+	FileHandler::printMatrix(matrixB);
+
+	int columnsMatrixA = AlgebraHandler::getMatrixColumnsCount(matrixA);
+	int rowsMatrixA = AlgebraHandler::getMatrixRowsCount(matrixA);
+	int columnsMatrixB = AlgebraHandler::getMatrixColumnsCount(matrixB);
+	int rowsMatrixB = AlgebraHandler::getMatrixRowsCount(matrixB);
+
+	if (columnsMatrixA != rowsMatrixB) {
+		cout << "Error: No se puede hacer la multiplicion de estas matrices! Las columnas de la primera matriz tienen que ser iguales a las filas de la segunda matriz\n";
+		return;
+	}
+
+	int counter = 0;
+
+	node newMatrix = 0;
+	node tmpA = matrixA, tmpB = matrixB, tmpC = matrixA;
+
+	node helperTmpA = tmpA, helperTmpB = tmpB;
+	while (tmpC != 0) {
+
+		tmpA = helperTmpA;
+		tmpB = helperTmpB;
+		int contador = 0;
+
+		while (contador < columnsMatrixB) {
+			int resultado = 0;
+
+			while (tmpA != 0) {
+				resultado += tmpA->valor * tmpB->valor;
+				tmpA = tmpA->derecha;
+				tmpB = tmpB->abajo;
+			}
+
+			FileHandler::createMatrix(newMatrix, resultado, counter);
+			tmpA = helperTmpA;
+			helperTmpB = helperTmpB->derecha;
+			tmpB = helperTmpB;
+			contador++;
+			resultado = 0;
+		}
+
+		helperTmpA = helperTmpA->abajo;
+		helperTmpB = matrixB;
+		tmpC = tmpC->abajo;
+		counter++;
+	}
+
+	//Efectos Visuales
+	AlgebraHandler::specialEffects();
+
+	FileHandler::saveMatrix(newMatrix);
+	cout << "\n\tImprimiendo la Matriz Resultante\n" << endl;
+	FileHandler::printMatrix(newMatrix);
+	cout << endl;
 
 }
 
@@ -166,8 +204,8 @@ void AlgebraHandler::determinantOfMatrix() {
 
 	node matrix = FileHandler::loadMatrixFromFile();
 
-	if (matrix == 0)
-		return;
+	while (matrix == 0) //Repetir hasta que ingrese un archivo valido
+		matrix = FileHandler::loadMatrixFromFile();
 
 	int columns = AlgebraHandler::getMatrixColumnsCount(matrix);
 	int rows = AlgebraHandler::getMatrixRowsCount(matrix);
@@ -182,11 +220,13 @@ void AlgebraHandler::determinantOfMatrix() {
 		return;
 	}
 
-	node tmp = matrix;
+	node tmp = matrix; 
 
-
-	int determinant = ((rows != 1) ? ((rows == 2) ? getDeterminant2x2(matrix) : getDeterminant3x3(matrix)) : 1);
+	int determinant = ((rows != 1) ? ((rows == 2) ? getDeterminant2x2(matrix) : getDeterminant3x3(matrix)) : 1); //Dependiendo del tamaño de la matriz, se llamara a su funcion respectiva
 	
+	//Efectos Visuales
+	AlgebraHandler::specialEffects();
+
 	cout << "La determinante es: " << determinant << endl;
 	FileHandler::saveDeterminant(determinant);
 
@@ -194,7 +234,6 @@ void AlgebraHandler::determinantOfMatrix() {
 
 int AlgebraHandler::getMatrixColumnsCount(Node*& matrix)
 {
-
 	node tmp = matrix;
 	int count = 0;
 
@@ -210,7 +249,6 @@ int AlgebraHandler::getMatrixRowsCount(Node *&matrix) {
 
 	node tmp = matrix;
 	int count = 0;
-
 
 	while (tmp != 0) {
 		tmp = tmp->abajo;
@@ -256,7 +294,9 @@ int AlgebraHandler::getDeterminant3x3(Node *& matrix)
 	node tmp = matrix;
 	node helper = tmp;
 
-	int a11, a12, a13, a21, a22, a23, a31, a32, a33;
+	int a11, a12, a13;
+	int a21, a22, a23;
+	int a31, a32, a33;
 
 	a11 = tmp->valor;
 	a12 = tmp->derecha->valor;
@@ -269,5 +309,25 @@ int AlgebraHandler::getDeterminant3x3(Node *& matrix)
 	a33 = tmp->abajo->abajo->derecha->derecha->valor;
 
 	return ((a11 * a22 * a33) + (a12 * a23 * a31) + (a21*a32*a13)) - ((a13 * a22 * a31) + (a12 * a21 * a33) + (a23 * a32 * a11));
+
+}
+
+void AlgebraHandler::specialEffects() {
+
+	cout << "Haciendo calculos";
+	Sleep(500);
+	cout << ".";
+	Sleep(500);
+	cout << ".";
+	Sleep(500);
+	cout << ".";
+	Sleep(500);
+	cout << ".";
+	Sleep(500);
+	cout << ".";
+	Sleep(500);
+	cout << "." << endl;
+	Sleep(100);
+	system("cls");
 
 }

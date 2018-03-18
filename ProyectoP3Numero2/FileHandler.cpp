@@ -6,11 +6,11 @@
 
 using namespace std;
 
-FileHandler::FileHandler()
+	 FileHandler::FileHandler()
 {
 }
 
-FileHandler::~FileHandler()
+	 FileHandler::~FileHandler()
 {
 }
 
@@ -105,7 +105,7 @@ void FileHandler::printMatrix(Node *& matrix)
 	while (tmp != 0) {
 
 		while (tmp != 0) {
-			cout << tmp->valor << ' ';
+			cout << tmp->valor << '\t';
 			tmp = tmp->derecha;
 		}
 		cout << endl;

@@ -7,6 +7,7 @@ class AlgebraHandler
 public:
 	AlgebraHandler();
 	~AlgebraHandler();
+	static void specialEffects();
 	static void addMatrix();
 	static void substractMatrix();
 	static void multiplyMatrix();

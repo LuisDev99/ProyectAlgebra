@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <string>
 #include "AlgebraHandler.h"
@@ -9,7 +10,7 @@ int main() {
 	int menu = 0;
 
 	do {
-		cout << "1. Sumar matrices\n2. Restar matrices\n3. Multiplicar Matrices\n4. Sacar Determinante\nUn numero mayor a 4 para salir\nIngrese lo que quiere hacer: ";
+		cout << "1. Sumar matrices\n2. Restar matrices\n3. Multiplicar Matrices\n4. Sacar Determinante\n5. Salir\nIngrese lo que quiere hacer: ";
 		cin >> menu;
 
 
@@ -27,7 +28,7 @@ int main() {
 			break;
 		case 3:
 			//Multiplicar
-
+			AlgebraHandler::multiplyMatrix();
 			break;
 		case 4:
 			//Determinante
@@ -39,7 +40,7 @@ int main() {
 		}
 
 		
-	} while (menu <= 4 && menu > 0);
+	} while (menu != 5);
 
 
 }
