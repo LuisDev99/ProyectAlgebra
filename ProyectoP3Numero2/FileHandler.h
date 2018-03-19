@@ -3,6 +3,8 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <string>
+
 typedef struct Node {
 
 	int valor;
@@ -18,6 +20,7 @@ public:
 	FileHandler();
 	~FileHandler();
 
+	static std::string fileExtension;
 	static void createLineOfNodes(Node *& primerNodo, int val);
 	static void createNode(Node *&nodo, int val);
 	static node loadMatrixFromFile();

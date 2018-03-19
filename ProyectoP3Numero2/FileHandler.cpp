@@ -3,8 +3,11 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
-
+#pragma warning(disable : 4996)
 using namespace std;
+
+
+string FileHandler::fileExtension = ".txt";
 
 	 FileHandler::FileHandler()
 {
@@ -55,15 +58,17 @@ void FileHandler::createMatrix(Node *& matriz, int val, int rowCount) {
 			tmp = tmp->abajo;
 			row++;
 		}
-		nodeBefore = tmp;
+
 		while (tmp->abajo != 0) {
 			nodeBefore = tmp;
 			tmp = tmp->derecha;
 		}
 		createNode(tmp->abajo, val);
-		nodeBefore->abajo->derecha = tmp->abajo;
+
+		if(nodeBefore != 0)
+			nodeBefore->abajo->derecha = tmp->abajo;
+
 	}
-	
 
 }
 
@@ -81,6 +86,7 @@ bool FileHandler::checkMatrixDimentions(string file)
 		}
 		contadorColumnas.push_back(columnas);
 		columnas = 0;
+		filas++;
 	}
 	fileMatrix.close();
 
@@ -93,6 +99,10 @@ bool FileHandler::checkMatrixDimentions(string file)
 				return false;
 		}
 	}
+
+	/*if (filas > 1 && contadorColumnas[0] == 1)
+		return false;*/
+
 	return true;
 
 }
@@ -122,7 +132,7 @@ void FileHandler::saveDeterminant(int valor)
 	cout << "Ingrese el nombre del archivo en el que desea guardar el resultado: ";
 	cin >> filename;
 
-	ofstream writer(filename);
+	ofstream writer(filename + FileHandler::fileExtension);
 
 	writer << "La determinante de la matriz es: " << valor << '\n';
 	writer.close();
@@ -132,18 +142,26 @@ void FileHandler::saveDeterminant(int valor)
 node FileHandler::loadMatrixFromFile()
 {
 	string fileName;
+	int menu = 0;
 
 	cout << "Ingrese el nombre del archivo de la matriz: ";
 	cin >> fileName;
 
-	ifstream matrixFromFile(fileName);
+	ifstream matrixFromFile(fileName + FileHandler::fileExtension);
 
-	if (!matrixFromFile) {
-		cout << "Error: Archivo de la matriz no encontrado" << endl;
-		return 0;
+	while (!matrixFromFile) {
+		cout << "Archivo no encontrado, Ingrese de nuevo el nombre (Ingrese -1 para regresar al menu): ";
+		cin >> fileName;
+
+		if (fileName == "-1") {
+			cout << "\nEntendido, regresando al menu principal\n";
+			return 0;
+
+		}
+		matrixFromFile.open(fileName + FileHandler::fileExtension);
 	}
 
-	if (checkMatrixDimentions(fileName) == false) { //verificar que las columnas de cada fila de la matriz tengan el mismo tamaño
+	if (checkMatrixDimentions(fileName + FileHandler::fileExtension) == false) { //verificar que las columnas de cada fila de la matriz tengan el mismo tamaño
 		cout << "Error: La Matriz es irregular, una columna de una fila no es igual que las demas(Asegurese que las columnas de cada fila tengan el mismo tamaño)" << endl;
 		return 0;
 	}
@@ -154,7 +172,7 @@ node FileHandler::loadMatrixFromFile()
 
 	while (getline(matrixFromFile, line)) { //Por cada linea
 		stringstream linestream(line);
-		
+
 		while (linestream >> value) { //Por cada valor en la linea
 			createMatrix(newMatrix, value, rowCounter);
 		}
@@ -164,15 +182,13 @@ node FileHandler::loadMatrixFromFile()
 	matrixFromFile.close();
 	cout << "== Matriz cargada sin ningun error! ==\n";
 	return newMatrix;
-
 }
 
 void FileHandler::saveMatrix(Node *&matrix) {
 	string fileName;
 	cout << "Ingrese el nombre con el que desea guardar el archivo con la matriz resultante: ";
 	cin >> fileName;
-
-	ofstream writer(fileName, ios::app);
+	ofstream writer(fileName + fileExtension, ios::app);
 
 	node tmp = matrix;
 	node head = tmp;
@@ -189,3 +205,5 @@ void FileHandler::saveMatrix(Node *&matrix) {
 	cout << "\nHecho! Revisar el archivo con el resultado" << endl;
 	writer.close();
 }
+
+
