@@ -40,7 +40,7 @@ int main() {
 			break;
 
 		case 5:
-			cout << "\nIngrese la nueva extension (sin el punto .) : ";
+			cout << "\nIngrese la nueva extension (sin el punto .) [La extension actual es: "<< FileHandler::fileExtension  << "]: ";
 			cin >> fileName;
 			FileHandler::fileExtension = punto + fileName;
 			cout << "\nExtension cambiada, ahora durante la ejecucion del programa todos los archivos a leer o a guardar se escribiran con esta nueva extension \""+ punto + fileName+ "\"!\n\n";

@@ -71,6 +71,8 @@ void AlgebraHandler::addMatrix() {
 	FileHandler::saveMatrix(newMatrix);
 	cout << "\n\tImprimiendo la Matriz Resultante\n" << endl;
 	FileHandler::printMatrix(newMatrix);
+
+	delete newMatrix, matrixA, matrixB;
 	cout << endl;
 }
 
@@ -316,6 +318,7 @@ int AlgebraHandler::getDeterminant3x3(Node *& matrix)
 	a33 = tmp->abajo->abajo->derecha->derecha->valor;
 
 	return ((a11 * a22 * a33) + (a12 * a23 * a31) + (a21*a32*a13)) - ((a13 * a22 * a31) + (a12 * a21 * a33) + (a23 * a32 * a11));
+
 
 }
 
